@@ -2,7 +2,7 @@
 
 **Source:** `Deepseek strikes again.mp4` · 1280×720 · 30 fps · duration **27:21** (the file is 27:21, not a full 30:00 — the index covers every second of it).
 
-**Beats:** 56 graphics events across 14 chapters · **1641** seconds analysed at 1 fps · **777** hard cuts detected by ffmpeg scene scoring.
+**Beats:** 54 graphics events across 14 chapters · **1641** seconds analysed at 1 fps · **777** hard cuts detected by ffmpeg scene scoring.
 
 
 > Every row is machine-generated from `graphics/timeline.json`, which is the same file the burn-in renderer and the React player consume. `motion / lum` are the measured mean frame-delta and plate luminance of the beat's span — they tell you how much visual headroom the graphic has to work with.
@@ -115,8 +115,6 @@ _No overlay — intentional breathing room._
 
 | In | Out | Dur | Graphic | Copy / data | Motion | plate motion / lum | Why this beat |
 |----|-----|-----|---------|-------------|--------|---------------------|----------------|
-| `21:40` | `22:00` | 20.0s | **Bar chart** | SCORE BY BENCH — HLE=42.0 · TB 4.0=42.3 · DeepSWE=77.6 · NL2Repo=68.2 | bars grow scaleX, 70 ms stagger | 16.7 / 58 |  |
-| `22:00` | `22:25` | 25.0s | **Quadrant lens** | COST × SPEED — V4.1-Flash-1017=best $/task · GPT-5.5-Base=4× cost · Claude Opus 5=9× cost | frontier curve draws · focal dot pulses | 7.3 / 177 | Log-scale scatter appears at 22:00: a quadrant lens adds the missing read. |
 | `22:25` | `22:50` | 25.0s | **Callout card** | OPEN SOURCE — MIT · weights on HF — DeepSeek-V4.1-Flash-1017 | panel rise 26 px · staggered rows · leader line draws to anchor | 13.6 / 135 |  |
 
 ## CH12 · The Infra (`23:00–25:00`)
@@ -124,10 +122,10 @@ _No overlay — intentional breathing room._
 
 | In | Out | Dur | Graphic | Copy / data | Motion | plate motion / lum | Why this beat |
 |----|-----|-----|---------|-------------|--------|---------------------|----------------|
-| `23:20` | `23:40` | 20.0s | **Gauge** | 100 — GPU SPEED — % of peak | needle sweep with easeOutBack overshoot · arc dashoffset | 17.2 / 27 | The source's own gauge at 23:20 — re-draw it as a HUD so the needle sweep reads. |
+| `23:20` | `23:40` | 20.0s | **Gauge** | 100 — FABRIC UTILISATION — % of peak | needle sweep with easeOutBack overshoot · arc dashoffset | 17.2 / 27 | The source draws its own 'GPU speed' gauge at 23:20, so this HUD reads a different quantity (fabric utilisation) instead of restating the source. |
 | `23:39` | `24:00` | 21.0s | **Metric counter** | 155T — single cluster · internet-scale — TRILLION TOKENS / DAY | count-up (decelerating) · label fade · hairline progress | 13.9 / 34 |  |
-| `24:00` | `24:19` | 19.0s | **Bar chart** | $30 REVENUE / GPU HOUR — Compute costs=20% · Profit=80% | bars grow scaleX, 70 ms stagger | 6.6 / 28 |  |
-| `24:20` | `24:40` | 20.0s | **Donut** | 96% — INPUT CACHE HIT RATE | ring sweep from 12 o'clock · value counts with it | 10.5 / 21 | Donut sweep synced to the 98→96% on-screen counter. |
+| `24:00` | `24:19` | 19.0s | **Metric counter** | 30 — 20% compute · 80% profit — $ REVENUE / GPU HOUR | count-up (decelerating) · label fade · hairline progress | 6.6 / 28 | The source already draws the 20/80 split as its own bar chart in the centre — this states the headline figure in the free right margin instead of repeating it. |
+| `24:20` | `24:40` | 20.0s | **Donut** | 96% — PREFILL AVOIDED | ring sweep from 12 o'clock · value counts with it | 10.5 / 21 | The source owns the big centre donut; this is a smaller dial in the lower-left that reframes the same 96% as avoided prefill work. |
 | `24:40` | `25:00` | 20.0s | **Ticker rail** | PRICING  ·  FREE $0  ·  PLUS $20  ·  PRO $200  ·  1M-TOKEN CONTEXT ON ALL TIERS | marquee offset = (t − t0) × 46 px/s (scrub-safe) | 31.8 / 67 | The pricing cards are already on screen — reinforce as a rail, not a panel. |
 
 ## CH13 · Open Source (`25:00–26:43`)

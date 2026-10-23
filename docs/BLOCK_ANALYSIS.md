@@ -18,3 +18,12 @@ Measured on the source at 1 fps: luminance, saturation, frame-to-frame motion, e
 - **Darkest plate:** block 1 at luminance 56/255 — accents must be bright (cyan/lime), never mid-grey.
 - **Most text-heavy:** block 2 at text density 0.138 — overlay only in margins, never over copy.
 - **Colour identity:** all six blocks are blue-dominant (210–240°); every overlay accent was chosen to *contrast* with that field, which is why the system leads with cyan, lime and amber rather than more blue.
+
+## Creative calls — where the graphics stay out of the way
+
+The measured plate decides the treatment. Where the source already animates its own data, adding a second chart reads as clutter, so those windows get margin notes or nothing at all. These are the deliberate gaps:
+
+- `02:50–03:50` — the Eratosthenes interlude animates itself (map, shadow, type) — margin corner notes only, no panels.
+- `16:25–18:40` — the model section carries its own tables and charts — callouts sit in the left margin, never over the data.
+- `21:20–22:25` — the Numbers chapter runs a benchmark table → bar race → cost/speed scatter, all full-frame. Earlier drafts drew our own bars and a quadrant lens over them and were unreadable; the window is now clean apart from the top-edge delta ticker, which rides the source's browser chrome.
+- `23:20–24:40` — the infrastructure section already shows a gauge, a 20/80 bar and a cache donut, so the three HUDs here deliberately measure *different* quantities (fabric utilisation, $/GPU-hour, prefill avoided) instead of restating the source's own numbers.

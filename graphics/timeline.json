@@ -980,7 +980,7 @@
     0.12
    ],
    "motion": "slide_up",
-   "accent": "magenta",
+   "accent": "cyan",
    "title": "EDM \u00b7 128 BPM",
    "sub": "prompt \u2192 stems \u2192 mix",
    "note": "Prompt beat: show the hypothetical groove before the DAW appears.",
@@ -1007,7 +1007,7 @@
     0.085
    ],
    "motion": "wipe",
-   "accent": "magenta",
+   "accent": "cyan",
    "title": "STEMS \u00b7 12 TRACKS",
    "sub": "128 BPM \u00b7 A minor",
    "long": true,
@@ -1528,107 +1528,6 @@
    }
   },
   {
-   "id": "e044",
-   "t0": 1300.0,
-   "t1": 1320.0,
-   "kind": "bars",
-   "box": [
-    0.045,
-    0.12,
-    0.44,
-    0.52
-   ],
-   "motion": "slide_up",
-   "accent": "lime",
-   "title": "SCORE BY BENCH",
-   "items": [
-    {
-     "label": "HLE",
-     "value": "42.0",
-     "num": 0.42
-    },
-    {
-     "label": "TB 4.0",
-     "value": "42.3",
-     "num": 0.42
-    },
-    {
-     "label": "DeepSWE",
-     "value": "77.6",
-     "num": 0.78
-    },
-    {
-     "label": "NL2Repo",
-     "value": "68.2",
-     "num": 0.68
-    },
-    {
-     "label": "Apex",
-     "value": "72.1",
-     "num": 0.72
-    },
-    {
-     "label": "BabyVision",
-     "value": "71.7",
-     "num": 0.72
-    }
-   ],
-   "measured": {
-    "motion": 16.726,
-    "lum": 57.907,
-    "sat": 0.235,
-    "black": 0.446,
-    "audio_db": -22.493,
-    "dominant_hue_deg": 60,
-    "dur": 20.0,
-    "recommended_ink": "light"
-   }
-  },
-  {
-   "id": "e045",
-   "t0": 1320.0,
-   "t1": 1345.0,
-   "kind": "quadrant",
-   "box": [
-    0.045,
-    0.1,
-    0.4,
-    0.4
-   ],
-   "motion": "draw",
-   "accent": "cyan",
-   "title": "COST \u00d7 SPEED",
-   "anchor": [
-    0.72,
-    0.34
-   ],
-   "items": [
-    {
-     "label": "V4.1-Flash-1017",
-     "value": "best $/task"
-    },
-    {
-     "label": "GPT-5.5-Base",
-     "value": "4\u00d7 cost"
-    },
-    {
-     "label": "Claude Opus 5",
-     "value": "9\u00d7 cost"
-    }
-   ],
-   "note": "Log-scale scatter appears at 22:00: a quadrant lens adds the missing read.",
-   "measured": {
-    "motion": 7.321,
-    "lum": 176.515,
-    "sat": 0.164,
-    "black": 0.085,
-    "audio_db": -22.998,
-    "dominant_hue_deg": 210,
-    "dur": 25.0,
-    "recommended_ink": "dark"
-   }
-  },
-  {
    "id": "e046",
    "t0": 1345.0,
    "t1": 1370.0,
@@ -1668,7 +1567,7 @@
    ],
    "motion": "pop",
    "accent": "lime",
-   "title": "GPU SPEED",
+   "title": "FABRIC UTILISATION",
    "value": 100,
    "label": "% of peak",
    "unit": "",
@@ -1676,7 +1575,7 @@
     0.5,
     0.5
    ],
-   "note": "The source's own gauge at 23:20 \u2014 re-draw it as a HUD so the needle sweep reads.",
+   "note": "The source draws its own 'GPU speed' gauge at 23:20, so this HUD reads a different quantity (fabric utilisation) instead of restating the source.",
    "measured": {
     "motion": 17.182,
     "lum": 26.874,
@@ -1721,28 +1620,21 @@
    "id": "e049",
    "t0": 1440.0,
    "t1": 1459.0,
-   "kind": "bars",
+   "kind": "stat",
    "box": [
-    0.055,
-    0.62,
-    0.46,
+    0.66,
+    0.16,
+    0.3,
     0.2
    ],
-   "motion": "slide_up",
+   "motion": "pop",
    "accent": "amber",
-   "title": "$30 REVENUE / GPU HOUR",
-   "items": [
-    {
-     "label": "Compute costs",
-     "value": "20%",
-     "num": 0.2
-    },
-    {
-     "label": "Profit",
-     "value": "80%",
-     "num": 0.8
-    }
-   ],
+   "value": 30,
+   "label": "$ REVENUE / GPU HOUR",
+   "suffix": "",
+   "sub": "20% compute \u00b7 80% profit",
+   "fmt": "comma",
+   "note": "The source already draws the 20/80 split as its own bar chart in the centre \u2014 this states the headline figure in the free right margin instead of repeating it.",
    "measured": {
     "motion": 6.626,
     "lum": 27.583,
@@ -1760,17 +1652,17 @@
    "t1": 1480.0,
    "kind": "donut",
    "box": [
-    0.055,
-    0.16,
-    0.3,
+    0.045,
+    0.52,
+    0.26,
     0.34
    ],
    "motion": "pop",
    "accent": "lime",
    "value": 96,
-   "label": "INPUT CACHE HIT RATE",
+   "label": "PREFILL AVOIDED",
    "suffix": "%",
-   "note": "Donut sweep synced to the 98\u219296% on-screen counter.",
+   "note": "The source owns the big centre donut; this is a smaller dial in the lower-left that reframes the same 96% as avoided prefill work.",
    "measured": {
     "motion": 10.453,
     "lum": 20.869,

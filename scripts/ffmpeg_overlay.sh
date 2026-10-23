@@ -5,7 +5,7 @@
 # Burns the motion-graphics timeline into the source with ONE native FFmpeg
 # pass (libass). No Python, no NLE, no intermediate frames.
 #
-#   33 beats compiled from graphics/timeline.json  →  render/overlay.ass
+#   54 beats compiled from graphics/timeline.json  →  render/overlay.ass
 #   regenerate:  python3 scripts/make_ffmpeg_ass.py
 #
 # usage:
@@ -24,6 +24,7 @@ CRF="${CRF:-20}"
 mkdir -p "$(dirname "$OUT")"
 
 ASS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/render/overlay.ass"
+[[ -f "$ASS" ]] || { echo "missing $ASS — run scripts/make_ffmpeg_ass.py"; exit 1; }
 
 case "$CODEC" in
   h264) ENC=(-c:v libx264 -preset veryfast -crf "$CRF" -pix_fmt yuv420p) ;;
@@ -34,10 +35,19 @@ esac
 TRIM=()
 [[ -n "$DUR" ]] && TRIM=(-t "$DUR")
 
+# -copyts keeps the ORIGINAL timestamps through the filter graph, so the ASS
+# event times (absolute source seconds) still line up when rendering a window.
+# setpts=PTS-STARTPTS then rebases the OUTPUT to zero so the clip starts at 0:00.
+# -r 30 -fps_mode cfr are explicit because setpts hides the input framerate hint
+# from the encoder (it otherwise silently falls back to 25 fps + dropped frames).
+# Audio is re-encoded only so asetpts can rebase it too: a copied stream keeps
+# the original 1395 s start and stretches the clip's duration out to 23:55.
 ffmpeg -hide_banner -y \
-  -ss "$START" ${TRIM[@]+"${TRIM[@]}"} -i "$SRC" \
-  -vf "ass=$ASS" \
-  "${ENC[@]}" -c:a copy -movflags +faststart \
+  -ss "$START" -copyts ${TRIM[@]+"${TRIM[@]}"} -i "$SRC" \
+  -vf "ass=$ASS,setpts=PTS-STARTPTS" \
+  -r 30 -fps_mode cfr \
+  "${ENC[@]}" -c:a aac -b:a 160k -af "asetpts=PTS-STARTPTS" \
+  -movflags +faststart \
   "$OUT"
 
 echo "wrote $OUT"

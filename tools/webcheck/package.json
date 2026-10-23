@@ -1,0 +1,16 @@
+{
+  "name": "webcheck",
+  "private": true,
+  "type": "module",
+  "description": "Headless verification harness for the motion-graphics player",
+  "scripts": {
+    "check": "node harness.mjs",
+    "probe": "node probe.mjs"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.3",
+    "puppeteer-core": "^25.16.0"
+  }
+}

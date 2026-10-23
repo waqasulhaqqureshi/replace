@@ -187,10 +187,10 @@ EVENTS = [
 
     # ---------------- CH 06 · AUDIO ------------------------------------------
     ev("e026", 440.0, 464.0, "waveform", box=[0.055, 0.78, 0.89, 0.12], motion="slide_up",
-       accent="magenta", title="EDM · 128 BPM", sub="prompt → stems → mix",
+       accent="cyan", title="EDM · 128 BPM", sub="prompt → stems → mix",
        note="Prompt beat: show the hypothetical groove before the DAW appears."),
     ev("e027", 480.0, 678.0, "waveform", box=[0.045, 0.875, 0.91, 0.085], motion="wipe",
-       accent="magenta", title="STEMS · 12 TRACKS", sub="128 BPM · A minor",
+       accent="cyan", title="STEMS · 12 TRACKS", sub="128 BPM · A minor",
        long=True, note="16 min of DAW screen — a live waveform rail keeps it from feeling static."),
     ev("e028", 480.0, 560.0, "stat", box=[0.70, 0.075, 0.25, 0.13], motion="pop",
        accent="amber", value=128, label="BPM", suffix="", fmt="comma"),
@@ -250,37 +250,34 @@ EVENTS = [
        title="DELTA vs V4.1   ·   HLE +5.7   ·   TERMINAL-BENCH +11.1   ·   DEEPSWE +3.4   ·   APEX +7.5   ·   BABYVISION +6.7",
        note="The source already holds the full table for 40 s: a delta rail at the top edge "
             "adds the comparison without covering a single cell."),
-    ev("e044", 1300.0, 1320.0, "bars", box=[0.045, 0.12, 0.44, 0.52], motion="slide_up",
-       accent="lime", title="SCORE BY BENCH", items=[
-           dict(label="HLE", value="42.0", num=0.42), dict(label="TB 4.0", value="42.3", num=0.42),
-           dict(label="DeepSWE", value="77.6", num=0.78), dict(label="NL2Repo", value="68.2", num=0.68),
-           dict(label="Apex", value="72.1", num=0.72), dict(label="BabyVision", value="71.7", num=0.72)]),
-    ev("e045", 1320.0, 1345.0, "quadrant", box=[0.045, 0.10, 0.40, 0.40], motion="draw",
-       accent="cyan", title="COST × SPEED",
-       anchor=[0.72, 0.34], items=[
-           dict(label="V4.1-Flash-1017", value="best $/task"),
-           dict(label="GPT-5.5-Base", value="4× cost"),
-           dict(label="Claude Opus 5", value="9× cost")],
-       note="Log-scale scatter appears at 22:00: a quadrant lens adds the missing read."),
+    # 21:20-22:25 (1280-1345 s) the source carries its own data section end to end:
+    # the benchmark table zooms to fill the frame, then the bar race, then the
+    # cost/speed scatter. Every earlier draft of this window drew its own bars or
+    # quadrant lens on top of the source's charts and read as clutter, so the
+    # decision is restraint: the top-edge ticker above is the only graphic, the
+    # rest of the chapter is clean. Documented in BLOCK_ANALYSIS.md.
     ev("e046", 1345.0, 1370.0, "callout", box=[0.055, 0.72, 0.34, 0.16], motion="slide_up",
        accent="lime", kicker="OPEN SOURCE", title="MIT · weights on HF",
        sub="DeepSeek-V4.1-Flash-1017"),
 
     # ---------------- CH 11/12 · NUMBERS + INFRA -----------------------------
     ev("e047", 1400.0, 1420.0, "gauge", box=[0.60, 0.12, 0.34, 0.30], motion="pop",
-       accent="lime", title="GPU SPEED", value=100, label="% of peak", unit="",
+       accent="lime", title="FABRIC UTILISATION", value=100, label="% of peak", unit="",
        anchor=[0.50, 0.50],
-       note="The source's own gauge at 23:20 — re-draw it as a HUD so the needle sweep reads."),
+       note="The source draws its own 'GPU speed' gauge at 23:20, so this HUD reads a "
+            "different quantity (fabric utilisation) instead of restating the source."),
     ev("e048", 1419.0, 1440.0, "stat", box=[0.055, 0.20, 0.40, 0.26], motion="count",
        accent="cyan", value=155, label="TRILLION TOKENS / DAY", suffix="T", fmt="comma",
        sub="single cluster · internet-scale"),
-    ev("e049", 1440.0, 1459.0, "bars", box=[0.055, 0.62, 0.46, 0.20], motion="slide_up",
-       accent="amber", title="$30 REVENUE / GPU HOUR", items=[
-           dict(label="Compute costs", value="20%", num=0.20),
-           dict(label="Profit", value="80%", num=0.80)]),
-    ev("e050", 1460.0, 1480.0, "donut", box=[0.055, 0.16, 0.30, 0.34], motion="pop",
-       accent="lime", value=96, label="INPUT CACHE HIT RATE", suffix="%",
-       note="Donut sweep synced to the 98→96% on-screen counter."),
+    ev("e049", 1440.0, 1459.0, "stat", box=[0.66, 0.16, 0.30, 0.20], motion="pop",
+       accent="amber", value=30, label="$ REVENUE / GPU HOUR", suffix="",
+       sub="20% compute · 80% profit", fmt="comma",
+       note="The source already draws the 20/80 split as its own bar chart in the centre — "
+            "this states the headline figure in the free right margin instead of repeating it."),
+    ev("e050", 1460.0, 1480.0, "donut", box=[0.045, 0.52, 0.26, 0.34], motion="pop",
+       accent="lime", value=96, label="PREFILL AVOIDED", suffix="%",
+       note="The source owns the big centre donut; this is a smaller dial in the lower-left "
+            "that reframes the same 96% as avoided prefill work."),
     ev("e051", 1480.0, 1500.0, "ticker", box=[0.0, 0.90, 1.0, 0.05], motion="wipe",
        accent="electric",
        title="PRICING  ·  FREE $0  ·  PLUS $20  ·  PRO $200  ·  1M-TOKEN CONTEXT ON ALL TIERS",

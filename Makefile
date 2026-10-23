@@ -11,7 +11,7 @@ PY     ?= python3
 SEGS   ?= 0-62,150-240,676-762,1244-1300,1395-1500,1500-1585
 
 .PHONY: help all analyze timeline docs ass verify player build webdata \
-        render-highlights render-intro audio preview clean
+        render-highlights render-intro audio preview webcheck clean
 
 help:
 	@echo "make all               analyse source → timeline → docs → ass → web data"
@@ -25,6 +25,7 @@ help:
 	@echo "make render-intro      48 s · 1080p60 new film → render/"
 	@echo "make audio             original 120 BPM score"
 	@echo "make preview           30 s proof-of-concept burn-in"
+	@echo "make webcheck          run the player DOM harness (jsdom, 20 assertions)"
 	@echo "make clean             drop generated media (keeps sources + analysis json)"
 
 all: analyze timeline docs ass verify
@@ -43,6 +44,10 @@ ass:
 
 verify:
 	$(PY) scripts/verify.py --build
+
+webcheck:
+	cd tools/webcheck && npm install --no-audit --no-fund
+	cd tools/webcheck && node harness.mjs
 
 player: webdata
 	cd web && npm install --no-audit --no-fund && npm run dev

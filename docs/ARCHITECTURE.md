@@ -68,21 +68,47 @@ player and the burned-in file are pixel-equivalent even at 1080p or 4K.
 | `corner` | margin annotation for plates that already carry big type | PIL · ASS · web |
 | `chapter`, `caption` | kinetic typography, typewriter / word-mask | PIL · ASS · web |
 | `ticker` | scrub-safe marquee rail | PIL · ASS · web |
-| `bracket` | HUD frame + ticks + crosshair around a region | PIL · web |
-| `leaderboard` | ranked rows with delta chips | PIL · web |
-| `bars` | staggered horizontal bars | PIL · web |
-| `progress` | value rail with live fraction | PIL · web |
-| `gauge`, `donut` | needle sweep / ring sweep | PIL · web |
-| `quadrant` | cost × speed scatter with frontier curve | PIL · web |
+| `bracket` | HUD frame + ticks + crosshair around a region | PIL · ASS · web |
+| `leaderboard` | ranked rows with delta chips | PIL · ASS · web |
+| `bars` | staggered horizontal bars | PIL · ASS · web |
+| `progress` | value rail with live fraction | PIL · ASS · web |
+| `gauge`, `donut` | needle sweep / ring sweep | PIL · ASS · web |
+| `quadrant` | cost × speed scatter with frontier curve | PIL · ASS · web |
 | `equation` | proof beat with underline sweep | PIL · ASS · web |
-| `speed_hud` | delta + speed streaks | PIL · web |
-| `ring` | tracking ring on a focal point | PIL · web |
-| `waveform` | canvas waveform from the real audio envelope | PIL · web |
+| `speed_hud` | delta + speed streaks | PIL · ASS · web |
+| `ring` | tracking ring on a focal point | PIL · ASS · web |
+| `waveform` | canvas waveform from the real audio envelope | PIL · ASS · web |
 | `ad_break` | broadcast stinger | PIL · ASS · web |
 | `end_card` | pulse rings + play glyph | PIL · ASS · web |
 
-`ASS` is a subset by design: libass is excellent at type and rectangles, but bars, gauges and
-canvas waveforms belong on the Python/web paths.
+**All 18 primitives render on all three paths** (the current timeline uses 17 — the `quadrant` lens is implemented but was retired from the Numbers chapter in favour of restraint, see `BLOCK_ANALYSIS.md`). The ASS path carries the data-viz shapes as vector
+paths (`\p1`) rather than as text approximation: `bracket`/`quadrant`/`ring` are polylines with a
+hairline `\bord` (the fill is set to alpha 1.0 so only the stroke shows), `bars` grow with
+`\t(\fscx…)`, `progress` is a `\t`-animated rail, `donut` is 36 sequenced wedges (one per step,
+fading in on its own beat so the sweep reads as continuous), `gauge` is a sampled arc plus an
+`\org`-pivoted needle rotated with `\fr`, and `waveform` is drawn from the real
+`graphics/waveform.json` peaks with an `\move` playhead. The one thing ASS cannot do is sub-frame
+text measurement, so every generated panel clamps its type to a 620 px fit box and hugs its own
+content height.
+
+## The FFmpeg path: absolute time, not window time
+
+`make_ffmpeg_ass.py` emits events at **absolute source seconds**, which is what makes one ASS
+file valid for the whole 27-minute film and for any window cut out of it. The render script
+therefore keeps `-copyts` (so libass sees the original timestamps even when `-ss` jumps to
+23:15), rebases the *output* with `setpts=PTS-STARTPTS` and `asetpts=PTS-STARTPTS`, and pins
+`-r 30 -fps_mode cfr`.
+
+Two failure modes this prevents, both observed:
+
+| Missing | Symptom |
+|---|---|
+| `-copyts` | a window rendered at 23:15 shows the 0:00–1:00 graphics |
+| `-r 30 -fps_mode cfr` | `setpts` hides the framerate hint → encoder falls back to **25 fps** and drops ~20 % of frames |
+| `asetpts` (copied audio) | the clip's duration stretches to 23:55 because the audio keeps its 1395 s start |
+| `\move` with a `\pos` in front | libass honours the `\pos` and freezes the element at its start point — the marquee sat off-screen at x=1320, so the ticker drew an empty rail for 8 beats |
+
+`verify.py` asserts the first two are still present in the generated script.
 
 ## Web player internals
 
@@ -98,6 +124,14 @@ web/src/
   ui/SceneIndex.tsx       searchable timestamp table (same data as the docs)
   ui/Telemetry.tsx        live measured plate stats for the current playhead
 ```
+
+**Verification harness.** `tools/webcheck/harness.mjs` is a jsdom driver that mounts the real
+`App` (esbuild bundle, React resolved from `web/node_modules`), stubs the media element and a
+2D canvas context, and then seeks through the timeline. It is the regression test for the
+player: index rows, transport, timestamp triggers, three quiet windows derived from
+`timeline.json`, the count-up, the GFX toggle, and a captured-error assertion. `make webcheck`
+runs it. Chromium (`probe.mjs`) is optional and unavailable in stripped containers — jsdom is
+the default so the check runs anywhere Node does.
 
 Three performance rules make 60 fps achievable with ~30 DOM nodes animating:
 

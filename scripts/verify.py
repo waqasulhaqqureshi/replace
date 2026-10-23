@@ -3,7 +3,8 @@
 verify.py — end-to-end consistency check for the motion-graphics system.
 
 Guards the contracts that are easy to break by accident:
-  1. every timeline kind has a renderer in the PIL compositor AND the React player
+  1. every timeline kind has a renderer in the PIL compositor, the React player
+     AND the FFmpeg/libass vector renderer
   2. every event is well-formed (box in 0..1, t1 > t0, measured stats present)
   3. no two same-corner graphics collide on screen at the same time
   4. graphics never cover a measured text-heavy plate (warns, doesn't fail)
@@ -56,6 +57,22 @@ def main() -> None:
           f"missing: {sorted(set(kinds) - pil)}" if set(kinds) - pil else f"{len(kinds)} kinds")
     check("every kind renders in the React player", not (set(kinds) - web),
           f"missing: {sorted(set(kinds) - web)}" if set(kinds) - web else f"{len(kinds)} kinds")
+
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from make_ffmpeg_ass import RENDERERS as ass_shapes  # noqa: E402  (main is guarded)
+    missing_ass = sorted(set(kinds) - set(ass_shapes))
+    check("every kind renders in the FFmpeg ASS renderer", not missing_ass,
+          f"missing: {missing_ass}" if missing_ass
+          else f"{len(kinds)}/{len(kinds)} kinds via {len(ass_shapes)} vector renderers")
+    ass = (ROOT / "render" / "overlay.ass").read_text()
+    pinned = [ln[:60] for ln in ass.splitlines()
+              if ln.startswith("Dialogue:") and "\\move(" in ln and "\\pos(" in ln]
+    check("no ASS event pins a \\move with \\pos", not pinned,
+          f"{len(pinned)} event(s) would sit frozen at their start point: {pinned[:2]}")
+    sh = (ROOT / "scripts" / "ffmpeg_overlay.sh").read_text()
+    check("ffmpeg_overlay.sh keeps absolute ASS timing",
+          "-copyts" in sh and "-r 30" in sh,
+          "-copyts + -r 30 present (a trimmed window would otherwise render 0:00-1:00)")
 
     print("\n2 · event schema")
     bad_box = [e["id"] for e in tl["events"] if not all(0 <= v <= 1.01 for v in e["box"])]

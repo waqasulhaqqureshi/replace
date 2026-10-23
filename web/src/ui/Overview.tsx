@@ -28,7 +28,10 @@ export function Overview({
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       c.width = Math.floor(r.width * dpr)
       c.height = Math.floor(r.height * dpr)
-      const ctx = c.getContext('2d')!
+      // a canvas can legitimately have no 2d context (disabled, or a hostile
+      // JS environment) — never let the timeline map take the whole app down
+      const ctx = c.getContext('2d')
+      if (!ctx) return
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       const w = r.width
       const h = r.height
