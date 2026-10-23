@@ -178,6 +178,26 @@ render loop (ticker marquee, callout card, waveform HUD from the real audio enve
 | `out/preview_0_30.mp4` | 30 s proof-of-concept | 1280×720 · 30 fps |
 | `out/ffmpeg_cli_test.mp4` | native FFmpeg/libass path, 0–30 s | 1280×720 · 30 fps |
 
+### Downloading the renders
+
+The videos are git-ignored (a 27-minute file does not belong in git), so they are served
+instead. `make serve` starts a download server on `0.0.0.0:8000` that streams from `render/` and
+`out/`, lists each file with its size and SHA-256, and supports HTTP Range so a stalled download
+resumes instead of restarting:
+
+```bash
+make serve                      # → http://<host>:8000/  (live preview port 8000)
+
+# then, on your own machine
+curl -L -O https://<port>-<sandbox>.e2b.app/deepseek_overlay_ffmpeg_full.mp4
+curl -C - -L -O ...            # resume if the connection drops
+wget -c https://<port>-<sandbox>.e2b.app/deepseek_overlay_ffmpeg_full.mp4
+shasum -a 256 deepseek_overlay_ffmpeg_full.mp4   # compare with the page
+```
+
+The index page prints the exact `curl` lines for the current host, so copy them from there
+rather than from this file.
+
 The full-length FFmpeg burn-in is reproducible in one command (about 8 min for 27:21 at 720p):
 
 ```bash
@@ -202,6 +222,7 @@ scripts/
   verify.py                    consistency checks (renderer coverage, schema, collisions)
   preview_overlay.py  query_metrics.py  window_sheet.py  contact_sheets.py   QA tooling
 tools/webcheck/                jsdom harness that mounts and drives the real player
+tools/serve_deliverables.py    range-capable download server for the rendered media
 graphics/timeline.json         the source of truth
 analysis/metrics.json          1 fps measurements + block rollups
 web/                           React player
