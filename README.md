@@ -178,6 +178,29 @@ render loop (ticker marquee, callout card, waveform HUD from the real audio enve
 | `out/preview_0_30.mp4` | 30 s proof-of-concept | 1280×720 · 30 fps |
 | `out/ffmpeg_cli_test.mp4` | native FFmpeg/libass path, 0–30 s | 1280×720 · 30 fps |
 
+### Pulling the video with git
+
+The 27:21 burn-in also ships **inside the repo** as a review copy, so no server and no release
+page are needed:
+
+```bash
+git pull                      # existing clone → render/deepseek_overlay_full_720p.mp4
+# or from scratch
+git clone https://github.com/waqasulhaqqureshi/replace.git
+cd replace && open render/deepseek_overlay_full_720p.mp4
+```
+
+| | |
+|---|---|
+| File | `render/deepseek_overlay_full_720p.mp4` |
+| Spec | 27:21 · 1280×720 · 30 fps · CRF 27 · 94 MB · 308 kb/s video |
+| SHA-256 | see `render/DELIVERY.md` |
+
+GitHub refuses any single file over 100 MiB (and `git-lfs` is not available in this
+environment), so the committed copy is encoded at CRF 27 rather than CRF 20: same frames, same
+overlays, ~40 % smaller. The 148 MB CRF 20 master stays out of git and is served by
+`make serve` (below). Rebuild either with `CRF=<n> bash scripts/ffmpeg_overlay.sh 0 "" <out>`.
+
 ### Downloading the renders
 
 The videos are git-ignored (a 27-minute file does not belong in git), so they are served

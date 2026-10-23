@@ -1,5 +1,7 @@
 # ── large binary artefacts (regenerate with the documented commands) ─────────
 render/*.mp4
+# ...except the review copy, which ships in the repo so `git pull` is enough:
+!render/deepseek_overlay_full_720p.mp4
 render/*.wav
 render/*.m4a
 out/*.mp4
