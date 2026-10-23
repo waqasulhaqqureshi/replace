@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --safe-t: 5.5%;
+  --safe-r: 4.5%;
+  --safe-b: 7%;
+  --safe-l: 4.5%;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(77, 107, 254, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 95% 110%, rgba(47, 233, 255, 0.10), transparent 60%),
+    #05070d;
+  overflow-x: hidden;
+}
+
+/* GPU hints: every animated layer is composited, never laid out per frame */
+.gpu { transform: translateZ(0); will-change: transform, opacity; backface-visibility: hidden; }
+
+.glass {
+  background: linear-gradient(180deg, rgba(15, 21, 38, 0.92), rgba(9, 13, 24, 0.95));
+  border: 1px solid rgba(34, 48, 75, 0.9);
+  box-shadow: 0 24px 64px -28px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px) saturate(120%);
+}
+
+.hairline { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+
+.tabnum { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.035) 0px,
+    rgba(255, 255, 255, 0.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+.vignette::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+::selection { background: rgba(47, 233, 255, 0.28); }
+
+input[type='range'] { -webkit-appearance: none; appearance: none; background: transparent; }
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px; border-radius: 999px;
+  background: #2fe9ff;
+  box-shadow: 0 0 0 4px rgba(47, 233, 255, 0.18), 0 0 18px rgba(47, 233, 255, 0.6);
+  cursor: pointer;
+  margin-top: -6px;
+}
+input[type='range']::-webkit-slider-runnable-track {
+  height: 2px; border-radius: 2px;
+  background: rgba(255, 255, 255, 0.14);
+}

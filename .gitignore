@@ -1,0 +1,24 @@
+# ── large binary artefacts (regenerate with the documented commands) ─────────
+render/*.mp4
+render/*.wav
+render/*.m4a
+out/*.mp4
+analysis/audio.wav
+analysis/frames/
+analysis/sheets/
+analysis/blocks/
+analysis/qa/
+
+# ── node / build ────────────────────────────────────────────────────────────
+node_modules/
+web/dist/
+web/.vite/
+*.tsbuildinfo
+
+# ── python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+.venv/
+
+# ── os ──────────────────────────────────────────────────────────────────────
+.DS_Store
