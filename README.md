@@ -183,11 +183,27 @@ render loop (ticker marquee, callout card, waveform HUD from the real audio enve
 The 27:21 burn-in also ships **inside the repo** as a review copy, so no server and no release
 page are needed:
 
+The work lives on `arena/357429ce-replace`, so name the branch — a plain `git pull` on `main`
+will not see the file.
+
 ```bash
-git pull                      # existing clone → render/deepseek_overlay_full_720p.mp4
-# or from scratch
-git clone https://github.com/waqasulhaqqureshi/replace.git
-cd replace && open render/deepseek_overlay_full_720p.mp4
+# 1 · existing clone: grab just the file, without switching branches
+git fetch origin arena/357429ce-replace
+git checkout origin/arena/357429ce-replace -- render/deepseek_overlay_full_720p.mp4
+
+# 2 · or look at everything on that branch
+git fetch origin arena/357429ce-replace
+git checkout arena/357429ce-replace && git pull
+
+# 3 · fresh copy (shallow: skips the rest of the history)
+git clone -b arena/357429ce-replace --depth 1 \
+  https://github.com/waqasulhaqqureshi/replace.git
+```
+
+No clone at all — straight from GitHub's raw CDN:
+
+```bash
+curl -L -O https://github.com/waqasulhaqqureshi/replace/raw/arena/357429ce-replace/render/deepseek_overlay_full_720p.mp4
 ```
 
 | | |
