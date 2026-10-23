@@ -85,7 +85,7 @@ Frame numbers are at 60 fps. `t` is seconds.
 - **Type (hero):** kicker `DEEPSEEK`, `V4.1-Flash 1017` at up to 132 px auto-fit,
   sub `wish-driven programming`.
 - **Motion:** pop scale 0.93→1.0 with `easeOutBack(2.0)`; rings draw outward.
-- **Audio cue:** impact + sub drop at 36.0 (the loudest event in the bed).
+- **Audio cue:** impact + sub drop at 36.0 — measured peak 0.848 of full scale, landing with the riser's crest at 30.0–36.0.
 
 ### Scene 8 — OUTRO · `t 43.5 – 48.0` · frames 2610–2880
 - **Picture:** rings persist, dimmed.
@@ -135,8 +135,8 @@ is used or required.
 | 16.10 | low hit (lime accented) | burst + sub drop |
 | 18.00 | beats enter | kick + sub on every beat |
 | 24.00 | morph swell | filter opening across 6 s |
-| 30.00 | riser | 6 s noise sweep, peaking at 36.0 |
-| 36.00 | title impact | loudest event |
+| 30.00 | riser | 6 s noise sweep, crest at 36.0 (bed peak, 0.87) |
+| 36.00 | title impact | peak 0.85 · crest of the 6 s riser |
 | 43.50 | resolve | pad-only, 1.2 s fade out |
 
 Regenerate with `python3 scripts/synth_audio.py --dur 48`; swap in a licensed track by
