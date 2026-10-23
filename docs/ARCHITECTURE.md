@@ -107,6 +107,11 @@ Three performance rules make 60 fps achievable with ~30 DOM nodes animating:
 3. **Every animated node is transform/opacity only** (`translate3d`, `scaleX`), marked
    `will-change: transform` — no layout or paint on the compositor path.
 
+**Numeric parity.** `scripts/check_math_parity.py` bundles `web/src/lib/useFrame.ts` with esbuild
+and diffs its `ease.*` and `countAt()` outputs against `overlay_lib`'s Python versions. That is
+what guarantees a counter in the browser and the same counter in the burned-in mp4 agree at the
+same timestamp — the two runtimes share the curves, not just the design.
+
 `useActiveEvents` also fires `onEnter` / `onExit`, and the app re-broadcasts these as
 `window.dispatchEvent(new CustomEvent('dg:enter', { detail: ev }))`, so a host page can hang
 sound design, analytics or a CMS preview off the same timestamps.

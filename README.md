@@ -89,6 +89,15 @@ python3 scripts/make_docs.py       # documentation → docs/*.md
 python3 scripts/verify.py --build  # renderer coverage · schema · collisions · web build
 ```
 
+```bash
+python3 scripts/check_math_parity.py   # Python ↔ React easing / count-up parity
+```
+
+Both runtimes implement the same easing curves and the same decelerating count-up, so a counter
+in the live player lands on exactly the value the burned-in file shows at that timestamp. The
+parity script bundles the web easing module with esbuild and diffs 35 sample values against the
+Python implementation — currently **0 mismatches**.
+
 `verify.py` enforces the contracts that are easy to break silently: every event kind must have
 a renderer in both the PIL compositor and the React player, every box must be inside the
 normalised stage, no two same-corner graphics may overlap for more than 1.2 s, and
