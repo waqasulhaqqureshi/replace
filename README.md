@@ -130,6 +130,25 @@ any video file.
 
 ---
 
+## What it looks like
+
+**The 48-second film** — 8 scenes, 1080p60, original score:
+
+![intro stills](docs/img/intro-stills.jpg)
+
+**Burn-in on the source** — 60 fps overlay motion over a 30 fps plate:
+
+![burn-in stills](docs/img/burnin-stills.jpg)
+
+**Deliberate restraint** — the one section where the source already animates itself
+(`02:50–03:50`); the graphics step back to margin notes instead of restyling it:
+
+![interlude](docs/img/interlude-fix.jpg)
+
+**Native FFmpeg path** — the same timeline compiled to libass:
+
+![libass stills](docs/img/ffmpeg-libass-stills.jpg)
+
 ## Rendered artefacts
 
 | File | What | Spec |
